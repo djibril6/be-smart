@@ -1,0 +1,14 @@
+<form method="POST" (ngSubmit)="onLogin()" [formGroup]="form">
+    <input type="email"   
+                    id="input-email"
+                    autofocus 
+                    placeholder="Email" 
+                    formControlName="email" />
+
+    <input type="password"   
+                    id="pass"
+                    placeholder="password" 
+                    formControlName="pass" />
+
+    <button type="submit">Login</button>
+</form>
