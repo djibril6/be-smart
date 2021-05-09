@@ -7,4 +7,8 @@ export class AppConfig {
     public user: User;
     public connected = false;
     public token: string;
+    public roles = [
+        {value: 'ADMIN', title: 'ADMIN'},
+        {value: 'USER', title: 'USER'},
+    ];
 }

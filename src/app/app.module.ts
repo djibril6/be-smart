@@ -8,6 +8,8 @@ import { AppConfig } from './config/app.config';
 import { LoginService } from './pages/login/services/login.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthGuard } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -18,11 +20,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
-  providers: [LoginService, AppConfig],
+  providers: [LoginService, AppConfig, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

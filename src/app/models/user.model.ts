@@ -18,7 +18,7 @@ interface UserData {
     email?: string;
     pass?: string;
     role?: string;
-    sate?: boolean;
+    state?: boolean;
     createBy?: {
         id: string,
         name: string
@@ -29,7 +29,7 @@ export class User implements IUser {
     constructor(
         public success?: boolean,
         public message?: string,
-        public reponse?: UserData,
+        public result?: UserData,
         public token?: string
     ) {}
 }
@@ -38,6 +38,6 @@ export class AllUser implements IAllUser {
     constructor(
         public success?: boolean,
         public message?: string,
-        public reponse?: UserData[],
+        public result?: UserData[],
     ) {}
 }
