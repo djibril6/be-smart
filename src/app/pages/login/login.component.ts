@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
       if (res.body.success) {
         this.vg.token = res.body.token;
         this.vg.connected = true;
-        this.router.navigate(['page/users'])
+        this.vg.user = res.body.result;
+        this.router.navigate(['page/home/'])
       }
     });
   }

@@ -1,0 +1,38 @@
+.theCard {
+    display: inline-block;
+    width: 30%;
+    height: 100px;
+    margin-right: 20px;
+    // background-color: #fff;
+    align-items: center;
+    .content {
+        background-color: rgba(0, 0, 0, 0.315);
+        width: 100%;
+        height: 100%;
+        padding-top: 7%;
+    }
+    .text {
+        font-size: 30px;
+        // color: #2f51d8;
+    }
+    .Opened, .Closed {
+        width: 70px;
+        height: 20px;
+    }
+    .Opened {
+        color: white;
+        background-color: rgb(20, 167, 45);
+    }
+    .Closed {
+        color: white;
+        background-color: red;
+    }
+    .public {
+        color: rgb(55, 137, 230);
+        background-color: rgb(214, 203, 203);
+    }
+    .private {
+        color: rgb(230, 41, 34);
+        background-color: rgb(214, 203, 203);
+    }
+}

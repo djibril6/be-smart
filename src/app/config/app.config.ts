@@ -1,14 +1,30 @@
-import { User } from "../models/user.model";
+import { UserData } from "../models/user.model";
+
+class ProjectRoles {
+    constructor(
+        public OWNER?: string,
+        public DEV?: string,
+        public VIEWER?: string,
+    ) {}
+}
+
+class State {
+    constructor(
+        public OPENED?: string,
+        public CLOSED?: string,
+    ) {}
+}
 
 export class AppConfig {
-    // public MAIN_URL = process.env.SERVER_URI_PROD;
     public MAIN_URL = 'http://localhost:5555/';
 
-    public user: User;
+    public user: UserData;
     public connected = false;
     public token: string;
     public roles = [
         {value: 'ADMIN', title: 'ADMIN'},
         {value: 'USER', title: 'USER'},
     ];
+    public project_roles = new ProjectRoles('OWNER', 'DEV', 'VIEWER');
+    public state = new State('Opened', 'Closed');
 }

@@ -1,7 +1,43 @@
 <nb-layout>
 
     <nb-layout-header fixed>
-    <!-- Insert header here -->
+      <button 
+        nbButton 
+        size="small" 
+        status="primary" 
+        (click)="newProject()" 
+        class="header-btn" 
+        outline>
+          New Project
+      </button>
+
+      <button 
+        nbButton 
+        size="small" 
+        status="primary" 
+        (click)="showUsers()" 
+        class="header-btn" 
+        outline>
+          Users config
+      </button>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+        <input nbInput fieldSize="small" type="text" placeholder="Search Project" [nbAutocomplete]="auto" name="searchValue" formControlName="searchValue"/>
+        <nb-autocomplete #auto>
+          <nb-option-group *ngFor="let group of groups"  [title]="group.name" >
+              <nb-option disabled="false" [value]="group.name">{{ group.name }}</nb-option>
+              <nb-option disabled="true" [value]="group.type">{{ group.type }}</nb-option>
+          </nb-option-group>
+        </nb-autocomplete>
+
+        <button  [nbSpinner]="loading" nbSpinnerStatus="info" nbButton size="small" status="primary" type="submit" ghost>
+            <nb-icon icon="search-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+      </form>
+
+      <div style="position: absolute; right: 20px;">
+        <nb-user size="small" (click)="onShowCompte()" shape="semi-round" [name]="vg.user?.firstname + ' ' + vg.user?.lastname" [title]="vg.user?.role"></nb-user>
+      </div>
     </nb-layout-header>
   
     <nb-layout-column>

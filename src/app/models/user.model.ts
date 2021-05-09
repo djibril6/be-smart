@@ -11,7 +11,7 @@ export interface IAllUser {
     result?: UserData[];
 }
 
-interface UserData {
+export interface UserData {
     _id?: string;
     firstname?: string;
     lastname?: string;
