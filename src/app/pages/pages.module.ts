@@ -15,7 +15,8 @@ import { NbThemeModule,
   NbUserModule,
   NbIconModule,
   NbCardModule,
-  NbTooltipModule
+  NbTooltipModule,
+  NbDatepickerModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -24,11 +25,12 @@ import { UserComponent } from './user/user.component';
 import {AddUserComponent} from './user/components/add-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProjectComponent } from './project/project.component';
+import { CardTitle, ProjectComponent, SingleTask } from './project/project.component';
 import { CreateProjectComponent } from './project/components/create-project/create-project.component';
 import { ProjectService } from './project/services/project.service';
 import { CreateCardComponent } from './project/components/create-card/create-card.component';
 import { ManageTeamComponent } from './project/components/manage-team/manage-team.component';
+import { CreateTaskComponent } from './project/components/create-task/create-task.component';
 
 
 @NgModule({
@@ -40,7 +42,10 @@ import { ManageTeamComponent } from './project/components/manage-team/manage-tea
     ProjectComponent,
     CreateProjectComponent,
     CreateCardComponent,
-    ManageTeamComponent
+    ManageTeamComponent,
+    CreateTaskComponent,
+    CardTitle,
+    SingleTask
   ],
   imports: [
     CommonModule,
@@ -62,7 +67,8 @@ import { ManageTeamComponent } from './project/components/manage-team/manage-tea
     NbUserModule,
     NbIconModule,
     NbCardModule,
-    NbTooltipModule
+    NbTooltipModule,
+    NbDatepickerModule.forRoot(),
   ],
   providers: [UserService, ProjectService]
 })

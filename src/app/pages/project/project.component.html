@@ -52,14 +52,9 @@
         </div>
     </div>
     <div id="body">
-        <div class="cards" *ngFor="let item of project.cards">
+        <div class="cards" *ngFor="let item of cards">
             <div class="card-header">
-                <input nbInput type="text" [value]="item.name" readonly>
-                <button 
-                *ngIf="current_user.role == vg.project_roles.OWNER"
-                nbButton (click)="editCard(item)" outline size="small"  nbTooltip="Edit">
-                    <nb-icon icon="edit-2-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
-                </button>
+                <card-title [idProject]="project._id" [current_user]="current_user" [card]="item"></card-title>
             </div>
             <div class="card-body">
                 <button 
@@ -68,19 +63,13 @@
                 nbButton outline fullWidth size="tiny">
                     Add new Task
                 </button>
-                <nb-card *ngFor="let cd of item.task">
-                    <nb-card-body>
-                        <nb-user *ngFor="let user of cd.users" size="tiny" [nbTooltip]="user.role+' '+user?.name" [showTitle]="false" shape="round" [name]="user?.name" onlyPicture></nb-user>
-                        {{ cd.description }}
-                        <button 
-                        *ngIf="current_user.role == vg.project_roles.OWNER"
-                        (click)="editTask(task)"
-                        nbButton outline size="small"  nbTooltip="Edit">
-                            <nb-icon icon="edit-2-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
-                        </button>
-                    </nb-card-body>
-                    <!-- <nb-card-footer>hdbdbn</nb-card-footer> -->
-                </nb-card>
+                <single-task 
+                    *ngFor="let task of item.tasks" 
+                    [idProject]="project._id"
+                    [current_user]="current_user"
+                    [all_users]="project.users"
+                    [task]="task">
+                </single-task>
             </div>
         </div>
     </div>
