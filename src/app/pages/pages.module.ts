@@ -9,7 +9,12 @@ import { NbThemeModule,
   NbToastrModule,
   NbInputModule,
   NbButtonModule,
-  NbSelectModule
+  NbSelectModule,
+  NbSpinnerModule,
+  NbAutocompleteModule,
+  NbUserModule,
+  NbIconModule,
+  NbCardModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -18,6 +23,9 @@ import { UserComponent } from './user/user.component';
 import {AddUserComponent} from './user/components/add-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectComponent } from './project/project.component';
+import { CreateProjectComponent } from './project/components/create-project/create-project.component';
+import { ProjectService } from './project/services/project.service';
 
 
 @NgModule({
@@ -25,7 +33,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PageComponent, 
     HomeComponent, 
     UserComponent,
-    AddUserComponent
+    AddUserComponent,
+    ProjectComponent,
+    CreateProjectComponent
   ],
   imports: [
     CommonModule,
@@ -41,8 +51,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbToastrModule.forRoot(),
     NbInputModule,
     NbButtonModule,
-    NbSelectModule
+    NbSelectModule,
+    NbSpinnerModule,
+    NbAutocompleteModule,
+    NbUserModule,
+    NbIconModule,
+    NbCardModule
   ],
-  providers: [UserService]
+  providers: [UserService, ProjectService]
 })
 export class PagesModule { }
