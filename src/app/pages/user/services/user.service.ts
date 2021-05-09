@@ -30,6 +30,13 @@ export class UserService {
         .get<User>(url, {headers : this.reqHeader, observe: 'response'});
   }
 
+  getOneUserByEmail(email): Observable<EntityResponseType> {
+    this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
+    const url = this.vg.MAIN_URL + this.link + 'get/email/' + email;
+    return this.httpClient
+        .get<User>(url, {headers : this.reqHeader, observe: 'response'});
+  }
+
   AddUser(data): Observable<EntityResponseType> {
     this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
     const url = this.vg.MAIN_URL + this.link + 'add';

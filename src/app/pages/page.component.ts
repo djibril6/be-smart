@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppConfig } from '../config/app.config';
-import { NbSidebarService, NbWindowService, NbToastrService, NbComponentStatus } from '@nebular/theme';
+import { NbWindowService, NbToastrService, NbComponentStatus } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreateProjectComponent } from './project/components/create-project/create-project.component';

@@ -1,5 +1,8 @@
 <div style="text-align: center;">
-    <nb-card class="theCard" [style]="'background-color: '+item.color+';'" *ngFor="let item of projects">
+    <nb-card class="theCard" 
+    *ngFor="let item of projects"
+    [style]="'background-color: '+item.color+';'"
+    (click)="openProject(item)">
         <div class="content">
             <span class="text">{{ item.name }}</span>
             <div [class]="item.state">{{ item.state }}</div>

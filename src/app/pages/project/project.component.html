@@ -1,1 +1,87 @@
-<p>project works!</p>
+<div id="content" [style]="'background-color: '+project.color+';'">
+    <div id="header">
+        <button 
+        *ngIf="current_user.role == vg.project_roles.OWNER"
+        nbButton 
+        nbTooltip="Create new card"
+        size="small" 
+        status="primary" 
+        (click)="onCreateCard()" 
+        class="header-btn" 
+        outline>
+            <nb-icon icon="plus-square-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+        <button
+        *ngIf="current_user.role == vg.project_roles.OWNER"
+        nbButton 
+        nbTooltip="Manage Team"
+        size="small" 
+        status="primary" 
+        (click)="manageTeam()" 
+        class="header-btn" 
+        outline>
+            <nb-icon icon="people-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+
+        <button 
+        *ngIf="current_user.role == vg.project_roles.OWNER"
+        nbButton 
+        [nbTooltip]="'Declare the project as '+(project.type == 'public'? 'Private' :'Public' )"
+        size="small" 
+        status="primary" 
+        (click)="changeType()" 
+        class="header-btn" 
+        outline>
+            <nb-icon [icon]="project.type == 'public'? 'eye-off-outline' :'eye-outline'" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+
+        <button 
+        *ngIf="current_user.role == vg.project_roles.OWNER"
+        nbButton 
+        [nbTooltip]="(project.state == 'Opened'? 'Close' :'Open' )+ ' project'"
+        size="small" 
+        status="danger" 
+        (click)="changeState()" 
+        class="header-btn" 
+        outline>
+            <nb-icon [icon]="project.state == 'Opened'? 'lock-outline' :'unlock-outline'" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+
+        <div style="position: absolute; right: 20px; bottom: 20px;">
+            <nb-user size="tiny" [nbTooltip]="'Your role in this project: ' + current_user?.role" shape="round" [name]="current_user?.firstname + ' ' + current_user?.lastname" onlyPicture></nb-user>
+        </div>
+    </div>
+    <div id="body">
+        <div class="cards" *ngFor="let item of project.cards">
+            <div class="card-header">
+                <input nbInput type="text" [value]="item.name" readonly>
+                <button 
+                *ngIf="current_user.role == vg.project_roles.OWNER"
+                nbButton (click)="editCard(item)" outline size="small"  nbTooltip="Edit">
+                    <nb-icon icon="edit-2-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                </button>
+            </div>
+            <div class="card-body">
+                <button 
+                *ngIf="current_user.role == vg.project_roles.OWNER"
+                (click)="createTask(item)"
+                nbButton outline fullWidth size="tiny">
+                    Add new Task
+                </button>
+                <nb-card *ngFor="let cd of item.task">
+                    <nb-card-body>
+                        <nb-user *ngFor="let user of cd.users" size="tiny" [nbTooltip]="user.role+' '+user?.name" [showTitle]="false" shape="round" [name]="user?.name" onlyPicture></nb-user>
+                        {{ cd.description }}
+                        <button 
+                        *ngIf="current_user.role == vg.project_roles.OWNER"
+                        (click)="editTask(task)"
+                        nbButton outline size="small"  nbTooltip="Edit">
+                            <nb-icon icon="edit-2-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                        </button>
+                    </nb-card-body>
+                    <!-- <nb-card-footer>hdbdbn</nb-card-footer> -->
+                </nb-card>
+            </div>
+        </div>
+    </div>
+</div>

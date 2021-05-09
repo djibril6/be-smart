@@ -51,6 +51,13 @@ export class ProjectService {
         .patch<Project>(url, data, {headers : this.reqHeader, observe: 'response'});
   }
 
+  updateAdd(id, data): Observable<EntityResponseType> {
+    this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
+    const url = this.vg.MAIN_URL + this.link + 'update/add/' + id;
+    return this.httpClient
+        .patch<Project>(url, data, {headers : this.reqHeader, observe: 'response'});
+  }
+
   deleteProject(id): Observable<EntityResponseType> {
     this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
     const url = this.vg.MAIN_URL + this.link + id;

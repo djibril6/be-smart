@@ -1,0 +1,13 @@
+<form (ngSubmit)="onCreate()" [formGroup]="form">
+    <input type="text"   
+        id="input-name"
+        autofocus 
+        fullWidth
+        nbInput
+        placeholder="Name your Card" 
+        formControlName="name" />
+
+
+
+    <button nbButton [disabled]="form.invalid" type="submit">Create</button>
+</form>

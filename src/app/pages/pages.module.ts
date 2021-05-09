@@ -15,6 +15,7 @@ import { NbThemeModule,
   NbUserModule,
   NbIconModule,
   NbCardModule,
+  NbTooltipModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -26,6 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectComponent } from './project/project.component';
 import { CreateProjectComponent } from './project/components/create-project/create-project.component';
 import { ProjectService } from './project/services/project.service';
+import { CreateCardComponent } from './project/components/create-card/create-card.component';
+import { ManageTeamComponent } from './project/components/manage-team/manage-team.component';
 
 
 @NgModule({
@@ -35,7 +38,9 @@ import { ProjectService } from './project/services/project.service';
     UserComponent,
     AddUserComponent,
     ProjectComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    CreateCardComponent,
+    ManageTeamComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +61,8 @@ import { ProjectService } from './project/services/project.service';
     NbAutocompleteModule,
     NbUserModule,
     NbIconModule,
-    NbCardModule
+    NbCardModule,
+    NbTooltipModule
   ],
   providers: [UserService, ProjectService]
 })

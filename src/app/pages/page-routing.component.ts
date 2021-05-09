@@ -19,7 +19,7 @@ const routes: Routes = [
             component: UserComponent
           },
           {
-            path: 'project',
+            path: 'project/:id',
             component: ProjectComponent
           },
           { path: '', redirectTo: 'home', pathMatch: 'full' },

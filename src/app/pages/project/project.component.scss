@@ -1,0 +1,58 @@
+#content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    #header {
+        width: 100%;
+        height: 60px;
+        position: absolute;
+        top: 13%;
+        background-color: #262646;
+        padding-top: 10px;
+        padding-left: 20px;
+        box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.705);
+        .header-btn {
+            margin-right: 10px;
+        }
+    }
+
+    #body {
+        width: 100%;
+        height: 76%;
+        position: absolute;
+        bottom: 0px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+
+        .cards {
+            width: 20%;
+            margin-right: 20px;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display:inline-block;
+            background-color: #1B1B38;
+            color: white;
+            border-radius: 4px 4px;
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.76);
+
+            .card-header, .card-body {
+                width: 100%;
+                display: block;
+            }
+            .card-header {
+                height: 60px;
+                text-align: center;
+                padding-top: 10px;
+            }
+            .card-body {
+                padding: 10px 5px;
+            }
+        }
+    }
+}

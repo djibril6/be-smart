@@ -31,11 +31,12 @@ export interface ProjectData {
     tasks?: {
         _id: string,
         description: string,
-        user: {
+        users: {
             id: string,
             name: string,
             email: string,
-        },
+            role: string
+        }[],
         endDate: Date,
         comment: string,
         cards: string

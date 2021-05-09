@@ -2,6 +2,15 @@
 
     <nb-layout-header fixed>
       <button 
+        nbButton
+        size="small" 
+        status="primary" 
+        routerLink="['page/home']"
+        class="header-btn" 
+        outline>
+            <nb-icon icon="home-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+      </button>
+      <button 
         nbButton 
         size="small" 
         status="primary" 
