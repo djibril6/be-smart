@@ -1,0 +1,31 @@
+<form (ngSubmit)="action()" [formGroup]="form">
+    <input type="text"   
+                    id="input-firstname"
+                    autofocus 
+                    nbInput
+                    placeholder="firstname" 
+                    formControlName="firstname" />
+
+    <input type="text"   
+                    id="input-lastname" 
+                    placeholder="lastname" 
+                    nbInput
+                    formControlName="lastname" />
+
+    <input type="email"   
+                    id="input-email" 
+                    placeholder="Email" 
+                    nbInput
+                    formControlName="email" />
+
+    <nb-select name="ha" formControlName="role" id="role">
+        <nb-option *ngFor="let item of vg.roles" [value]="item.value">{{ item.title }}</nb-option>
+    </nb-select>
+
+    <nb-select name="ho" formControlName="state" id="state">
+        <nb-option value="true">Open</nb-option>
+        <nb-option value="false">Close</nb-option>
+    </nb-select>
+
+    <button nbButton [disabled]="form.invalid" type="submit">Login</button>
+</form>

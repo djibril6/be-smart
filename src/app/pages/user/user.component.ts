@@ -3,6 +3,8 @@ import { AllUser } from 'src/app/models/user.model';
 import { UserService } from './services/user.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AppConfig } from 'src/app/config/app.config';
+import { NbToastrService, NbComponentStatus, NbWindowService, NbDialogService } from '@nebular/theme';
+import { AddUserComponent } from './components/add-user.component';
 
 @Component({
   selector: 'app-user',
@@ -23,6 +25,7 @@ export class UserComponent implements OnInit {
       saveButtonContent: '<img src="assets/img/check.png" width="20" alt="">',
       cancelButtonContent: '<img src="assets/img/close.png" width="20" alt="">',
       confirmSave: true,
+      inputClass: 'editClass'
     },
     delete: {
       deleteButtonContent: '<img src="assets/img/trash.png" width="20" alt="">',
@@ -32,14 +35,15 @@ export class UserComponent implements OnInit {
       delete: true,
       add: true
     },
+    mode: 'external', // a revoir
     hideSubHeader: false,
     noDataMessage: 'No data',
     pager: {display: true, perPage: 10},
     columns: {
       firstname: {
         title: 'Firstname',
-        type: 'string',
-        editable: false,
+        type: 'html',
+        editable: true,
       },
       lastname: {
         title: 'Lastname',
@@ -82,10 +86,18 @@ export class UserComponent implements OnInit {
 
   users: AllUser;
 
-  constructor(private userService: UserService, public vg: AppConfig) { }
+  constructor(
+    private userService: UserService, 
+    private toastrService: NbToastrService, 
+    private windowService: NbWindowService, 
+    public vg: AppConfig) { }
 
   ngOnInit(): void {
     this.loadData()
+  }
+
+  showToast(position, status: NbComponentStatus, message, titre) {
+    this.toastrService.show(message, titre, { position, status });
   }
 
   loadData() {
@@ -111,38 +123,26 @@ export class UserComponent implements OnInit {
     if (window.confirm(message)) {
       this.userService.deleteUser(this.users.result.find(el => el.email == event.data.email)._id)
       .subscribe(res => {
+        this.showToast('top', 'info', res.body.message, 'User');
         this.loadData();
-        alert(res.body.message)
       })
     } else {
       event.confirm.reject();
     }
   }
 
-  createConfirm(event): void {
-    if (window.confirm('Are you sure you want to continue?')) {
-      const data = {
-        firstname: event.newData.firstname,
-        lastname: event.newData.lastname,
-        email: event.newData.email,
-        role: event.newData.role,
-        state: event.newData.state
-      };
-      this.userService.AddUser(data)
-      .subscribe(res => {
-        this.loadData();
-      });
-    }
+  createConfirm(): void {
+    this.windowService.open(AddUserComponent, { title: `Create User`, context: {add: true, user: {}} }).onClose.subscribe(res => {
+      this.loadData();
+    });
   }
 
   onEditConfirm(event): void {
-    if (window.confirm('Are you sure?')) {
-      this.userService.updateUser(this.users.result.find(el => el.email == event.data.email)._id, event.newData)
-      .subscribe(res => {
-        this.loadData();
-        alert(res.body.message)
-      })
-    }
+    this.windowService.open(AddUserComponent, { title: `Update User`, 
+      context: { add: false, user: this.users.result.find(el => el.email == event.data.email) } 
+    }).onClose.subscribe(res => {
+      this.loadData();
+    });
   }
 
 }
