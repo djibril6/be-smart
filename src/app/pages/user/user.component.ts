@@ -119,6 +119,10 @@ export class UserComponent implements OnInit {
   }
 
   onDeleteConfirm(event): void {
+    if (event.data.email == this.vg.user.email) {
+      this.showToast('top', 'info', 'Sorry but you can\'t delete yourself!', 'User');
+      return;
+    }
     const message = 'Are sure you want to delete this users?';
     if (window.confirm(message)) {
       this.userService.deleteUser(this.users.result.find(el => el.email == event.data.email)._id)

@@ -76,7 +76,8 @@ export class PageComponent implements OnInit {
     logout() {
       this.vg.connected = false;
       this.vg.user = {};
-      this.router.navigate(['login'])
+      this.vg.token = "";
+      this.router.navigate(['login']);
     }
     
 }
