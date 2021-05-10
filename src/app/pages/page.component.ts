@@ -8,12 +8,6 @@ import { ProjectService } from './project/services/project.service';
 import { ProjectData } from '../models/project.model';
 import { MyAccountComponent } from './user/components/my-account/my-account.component';
 
-
-export interface Group {
-    name: string;
-    type: string;
-  }
-
 @Component({
     selector: 'app-page',
     templateUrl: './page.component.html',
@@ -22,9 +16,8 @@ export interface Group {
 export class PageComponent implements OnInit {
 
     searchForm: FormGroup;
-    groups: Group[];
+    groups: ProjectData[];
     loading = false;
-    projects: ProjectData[];
 
     constructor(
         private windowService: NbWindowService, 
@@ -38,6 +31,10 @@ export class PageComponent implements OnInit {
     ngOnInit() {
         this.searchForm = this.fb.group({
             searchValue: ['', Validators.required],
+        });
+
+        this.searchForm.valueChanges.subscribe(item => {
+          this.onSearch(item.searchValue)
         });
     }
 
@@ -57,35 +54,22 @@ export class PageComponent implements OnInit {
       this.windowService.open(MyAccountComponent, { title: `My Acount` });
     }
 
-    onSubmit() {
-        this.loading = true;
-        this.proService.getProjectWithKey(this.searchForm.value.searchValue)
-          .subscribe(res => {
-              this.loading = false;
-            this.showToast('top', 'danger', 'No results',   'Search');
-            if (res.body.success) {
-              this.projects = res.body.result;
-            }
-        });
+    goToProject(project: ProjectData) {
+      const my_role = project.users?.find(item => item.id == this.vg.user._id);
+      if (!my_role && project.type ==  this.vg.type.PRIVATE) {
+        this.showToast('top', 'danger', 'This project is private. You can\'t acces to it until you are added', 'Project')
+        return;
+      }
+      this.router.navigate(['page/project', project._id])
     }
 
     onSearch(value: string) {
-        this.groups = [{
-          name: '',
-          type: ''
-        }];
         if (value) {
           this.proService.getProjectWithKey(value)
           .subscribe(res => {
             if (res.body.success) {
-              res.body.result.forEach(p => {
-                this.groups.push({
-                  name: p.name,
-                  type: p.type,
-                });
-              });
+              this.groups = res.body.result;
             }
-            this.groups.shift();
           });
         }
     }

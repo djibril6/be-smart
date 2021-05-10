@@ -30,18 +30,18 @@
           Users config
       </button>
 
-      <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+      <form [formGroup]="searchForm">
         <input nbInput fieldSize="small" type="text" placeholder="Search Project" [nbAutocomplete]="auto" name="searchValue" formControlName="searchValue"/>
         <nb-autocomplete #auto>
-          <nb-option-group *ngFor="let group of groups"  [title]="group.name" >
-              <nb-option disabled="false" [value]="group.name">{{ group.name }}</nb-option>
-              <nb-option disabled="true" [value]="group.type">{{ group.type }}</nb-option>
+          <nb-option-group *ngFor="let project of groups"  [title]="project.name" >
+              <nb-option disabled="false" (click)="goToProject(project)" [value]="project.name">Owner: {{project.users[0].firstname }} {{project.users[0].lastname}}</nb-option>
+              <nb-option disabled="true" [value]="project.type">{{ project.type }}</nb-option>
           </nb-option-group>
         </nb-autocomplete>
 
-        <button  [nbSpinner]="loading" nbSpinnerStatus="info" nbButton size="small" status="primary" type="submit" ghost>
+        <!-- <button  [nbSpinner]="loading" nbSpinnerStatus="info" nbButton size="small" status="primary" type="submit" ghost>
             <nb-icon icon="search-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
-        </button>
+        </button> -->
       </form>
 
       <button 

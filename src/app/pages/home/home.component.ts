@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   }
   openProject(project: ProjectData) {
     const my_role = project.users?.find(item => item.id == this.vg.user._id);
-    if (!my_role && project.type == 'private') {
+    if (!my_role && project.type == this.vg.type.PRIVATE) {
       this.showToast('top', 'danger', 'This project is private. You can\'t acces to it until you are added', 'Project')
       return;
     }
