@@ -44,8 +44,20 @@
         </button>
       </form>
 
-      <div style="position: absolute; right: 20px;">
-        <nb-user size="small" (click)="onShowCompte()" shape="semi-round" [name]="vg.user?.firstname + ' ' + vg.user?.lastname" [title]="vg.user?.role"></nb-user>
+      <button 
+        style="position: absolute; right: 20px;"
+        nbTooltip="Logout"
+        nbButton
+        size="small" 
+        status="primary" 
+        (click)="logout()"
+        class="header-btn" 
+        outline>
+            <nb-icon icon="log-out-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+      </button>
+
+      <div style="position: absolute; right: 120px;">
+        <nb-user size="small" nbTooltip="Click to show your account" (click)="onShowCompte()" shape="semi-round" [name]="vg.user?.firstname + ' ' + vg.user?.lastname" [title]="vg.user?.role"></nb-user>
       </div>
     </nb-layout-header>
   

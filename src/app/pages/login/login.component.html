@@ -1,6 +1,7 @@
 <div id="login-content">
     <form (ngSubmit)="onLogin()" [formGroup]="form">
         <h1>Login</h1>
+        <p *ngIf="error" class="error">Email or password incorrects!</p>
         <input 
         type="email"
         id="input-email"

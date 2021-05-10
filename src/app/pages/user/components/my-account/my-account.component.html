@@ -1,0 +1,39 @@
+<form (ngSubmit)="updateUser()" [formGroup]="form">
+    <input type="text"   
+                    id="input-firstname"
+                    autofocus 
+                    nbInput
+                    fullWidth
+                    placeholder="firstname" 
+                    formControlName="firstname" />
+
+    <input type="text"   
+                    id="input-lastname" 
+                    placeholder="lastname" 
+                    nbInput
+                    fullWidth
+                    formControlName="lastname" />
+
+    <input type="email"   
+                    id="input-email" 
+                    placeholder="Email" 
+                    nbInput
+                    fullWidth
+                    formControlName="email" />
+
+    <input type="text"   
+                    id="input-role"
+                    nbInput
+                    fullWidth
+                    readonly
+                    formControlName="role" />
+
+    <input type="password"   
+                    id="input-pass" 
+                    placeholder="Need a new password?" 
+                    nbInput
+                    fullWidth
+                    formControlName="pass" />
+
+    <button nbButton [disabled]="form.invalid" type="submit">Update</button>
+</form>

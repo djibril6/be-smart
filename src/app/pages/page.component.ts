@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CreateProjectComponent } from './project/components/create-project/create-project.component';
 import { ProjectService } from './project/services/project.service';
 import { ProjectData } from '../models/project.model';
+import { MyAccountComponent } from './user/components/my-account/my-account.component';
 
 
 export interface Group {
@@ -53,7 +54,7 @@ export class PageComponent implements OnInit {
     }
 
     onShowCompte() {
-        // this.windowService.open(UpdateCompteComponent, { title: `Mon compte` });
+      this.windowService.open(MyAccountComponent, { title: `My Acount` });
     }
 
     onSubmit() {
@@ -87,6 +88,11 @@ export class PageComponent implements OnInit {
             this.groups.shift();
           });
         }
+    }
+    logout() {
+      this.vg.connected = false;
+      this.vg.user = {};
+      this.router.navigate(['login'])
     }
     
 }

@@ -78,4 +78,11 @@ export class ProjectService {
     return this.httpClient
         .delete<Project>(url, {headers : this.reqHeader, observe: 'response'});
   }
+
+  deleteUser(id, user): Observable<EntityResponseType> {
+    this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
+    const url = this.vg.MAIN_URL + this.link +'delete/user/' + id;
+    return this.httpClient
+        .patch<Project>(url, user, {headers : this.reqHeader, observe: 'response'});
+  }
 }

@@ -23,6 +23,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UserService } from './user/services/user.service';
 import { UserComponent } from './user/user.component';
 import {AddUserComponent} from './user/components/add-user.component';
+import { MyAccountComponent } from './user/components/my-account/my-account.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardTitle, ProjectComponent, SingleTask } from './project/project.component';
@@ -39,6 +40,7 @@ import { CreateTaskComponent } from './project/components/create-task/create-tas
     HomeComponent, 
     UserComponent,
     AddUserComponent,
+    MyAccountComponent,
     ProjectComponent,
     CreateProjectComponent,
     CreateCardComponent,

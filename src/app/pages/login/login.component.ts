@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   user: User;
+  error = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -32,10 +33,13 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.form.value)
     .subscribe(res => {
       if (res.body.success) {
+        this.error = false;
         this.vg.token = res.body.token;
         this.vg.connected = true;
         this.vg.user = res.body.result;
         this.router.navigate(['page/home/'])
+      } else {
+        this.error = true;
       }
     });
   }

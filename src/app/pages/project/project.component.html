@@ -1,6 +1,15 @@
 <div id="content" [style]="'background-color: '+project.color+';'">
     <div id="header">
         <button 
+        nbButton
+        size="small" 
+        status="primary"
+        class="header-btn" 
+        ghost>
+            {{ project.name }}
+        </button>
+        
+        <button 
         *ngIf="current_user.role == vg.project_roles.OWNER"
         nbButton 
         nbTooltip="Create new card"
@@ -45,6 +54,18 @@
         class="header-btn" 
         outline>
             <nb-icon [icon]="project.state == 'Opened'? 'lock-outline' :'unlock-outline'" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+
+        <button 
+        *ngIf="current_user.role == vg.project_roles.VIEWER"
+        nbButton 
+        nbTooltip="Want to participate? Send request to the OWNER"
+        size="small" 
+        status="info" 
+        (click)="changeState()" 
+        class="header-btn" 
+        outline>
+            <nb-icon icon="paper-plane-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
         </button>
 
         <div style="position: absolute; right: 20px; bottom: 20px;">

@@ -48,6 +48,7 @@ export class ProjectComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private proService: ProjectService,
     private windowService: NbWindowService,
+    private toastService: NbToastrService,
     public vg: AppConfig
   ) { }
 
@@ -55,12 +56,25 @@ export class ProjectComponent implements OnInit {
     this.id = this.activateRoute.snapshot.paramMap.get('id');
     this.loadData();
   }
+  showToast(position, status: NbComponentStatus, message, titre) {
+    this.toastService.show(message, titre, { position, status });
+  }
 
   loadData() {
     this.proService.getOneProject(this.id)
       .subscribe(res => {
         this.project = res.body.result;
         this.current_user = this.project.users?.find(item => item.id == this.vg.user._id);
+        if (!this.current_user) {
+          this.current_user = {
+            id: this.vg.user._id,
+            firstname: this.vg.user.firstname,
+            lastname: this.vg.user.lastname,
+            role: this.vg.project_roles.VIEWER,
+            email: this.vg.user.email,
+            state: this.vg.user.state
+          }
+        }
         this.cards = this.project.cards;
         if (this.cards) {
           this.project.tasks.forEach(item => {
@@ -81,9 +95,27 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  changeState() { }
+  changeState() {
+    const state = this.project.state == this.vg.state.OPENED? this.vg.state.CLOSED:this.vg.state.OPENED
+    this.proService.updateProject(this.project._id, {state})
+    .subscribe(res => {
+      if (res.body.success) {
+        this.project.state = state;
+      }
+      this.showToast('top', 'info', res.body.message, 'To '+state);
+    });
+  }
 
-  changeType() { }
+  changeType() {
+    const type = this.project.type == this.vg.type.PRIVATE? this.vg.type.PUBLIC:this.vg.type.PRIVATE
+    this.proService.updateProject(this.project._id, {type})
+    .subscribe(res => {
+      if (res.body.success) {
+        this.project.type = type;
+      }
+      this.showToast('top', 'info', res.body.message, 'To '+type);
+    });
+  }
 
   manageTeam() {
     this.windowService.open(ManageTeamComponent, { title: `Manage User`, context: { id: this.id, users: this.project.users } }).onClose.subscribe(res => {

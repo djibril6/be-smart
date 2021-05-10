@@ -37,7 +37,7 @@ export class ManageTeamComponent implements OnInit {
     actions: {
       delete: true,
       add: false,
-      update: false
+      edit: false
     },
     // mode: 'external', // a revoir
     hideSubHeader: false,
@@ -131,13 +131,28 @@ export class ManageTeamComponent implements OnInit {
   }
 
   onDeleteConfirm(event): void {
+    if (event.data.role == this.vg.project_roles.OWNER) {
+      this.showToast('top', 'danger', 'User with role '+ this.vg.project_roles.OWNER + ' can\'t be deleted from the project', 'User');
+      return;
+    }
     const message = 'Are sure you want to delete this users?';
     if (window.confirm(message)) {
-      // this.userService.deleteUser(this.data.users.find(el => el.email == event.data.email)._id)
-      // .subscribe(res => {
-      //   this.showToast('top', 'info', res.body.message, 'User');
-      //   this.loadData();
-      // })
+      const temp = this.data.users.find(el => el.email == event.data.email);
+      const the_user = {
+        id: temp.id,
+        firstname: event.data.firstname,
+        lastname: event.data.lastname,
+        email: event.data.email,
+        role: event.data.role,
+        state: event.data.state
+      };
+      this.proService.deleteUser(this.data.id, the_user)
+      .subscribe(res => {
+        this.showToast('top', 'info', res.body.message, 'User');
+        const idx = this.data.users.findIndex(el => el.email == event.data.email);
+        this.data.users.splice(idx, 1);
+        this.loadAllUser();
+      })
     } else {
       event.confirm.reject();
     }
