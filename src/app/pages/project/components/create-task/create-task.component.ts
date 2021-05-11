@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService, NbComponentStatus, NbWindowRef } from '@nebular/theme';
+import { AppConfig } from 'src/app/config/app.config';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class CreateTaskComponent implements OnInit {
     private proService: ProjectService,
     protected windowRef: NbWindowRef,
     private toastService: NbToastrService,
+    public vg: AppConfig,
   private fb: FormBuilder
   ) { }
 
@@ -52,6 +54,7 @@ export class CreateTaskComponent implements OnInit {
         endDate: new Date(this.form.value.endDate),
         comment: '-',
         cards: this.data.idCard,
+        state: this.vg.state.OPENED
     }
     this.proService.updateAdd(this.data.id, {tasks: data})
     .subscribe(res => {

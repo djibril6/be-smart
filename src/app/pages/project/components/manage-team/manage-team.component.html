@@ -5,15 +5,15 @@
         fullWidth
         nbInput
         placeholder="The User's Email" 
-        formControlName="email" />
+        formControlName="email" /> <br>
 
-    <nb-select name="ha" formControlName="role" id="role">
+    <nb-select name="ha" fullWidth formControlName="role" id="role">
         <nb-option [value]="vg.project_roles.OWNER">{{ vg.project_roles.OWNER }}</nb-option>
         <nb-option [value]="vg.project_roles.DEV">{{ vg.project_roles.DEV }}</nb-option>
         <nb-option [value]="vg.project_roles.VIEWER">{{ vg.project_roles.VIEWER }}</nb-option>
-    </nb-select>
+    </nb-select><br>
 
-    <button nbButton [disabled]="form.invalid" type="submit">Create</button>
+    <button nbButton fullWidth [disabled]="form.invalid" type="submit">Create</button>
 </form> <br>
 
 <ng2-smart-table style="color: black;" [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">

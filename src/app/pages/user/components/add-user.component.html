@@ -3,29 +3,32 @@
                     id="input-firstname"
                     autofocus 
                     nbInput
+                    fullWidth
                     placeholder="firstname" 
-                    formControlName="firstname" />
+                    formControlName="firstname" /> <br>
 
     <input type="text"   
                     id="input-lastname" 
                     placeholder="lastname" 
                     nbInput
-                    formControlName="lastname" />
+                    fullWidth
+                    formControlName="lastname" /> <br>
 
     <input type="email"   
                     id="input-email" 
                     placeholder="Email" 
                     nbInput
-                    formControlName="email" />
+                    fullWidth
+                    formControlName="email" /> <br>
 
-    <nb-select name="ha" formControlName="role" id="role">
+    <nb-select name="ha" fullWidth placeholder="Role" formControlName="role" id="role">
         <nb-option *ngFor="let item of vg.roles" [value]="item.value">{{ item.title }}</nb-option>
-    </nb-select>
+    </nb-select> <br>
 
-    <nb-select name="ho" formControlName="state" id="state">
-        <nb-option value="true">Open</nb-option>
-        <nb-option value="false">Close</nb-option>
-    </nb-select>
+    <nb-select name="ho" fullWidth placeholder="State" formControlName="state" id="state">
+        <nb-option value="true">Opened</nb-option>
+        <nb-option value="false">Closed</nb-option>
+    </nb-select> <br>
 
-    <button nbButton [disabled]="form.invalid" type="submit">Login</button>
+    <button nbButton fullWidth [disabled]="form.invalid" type="submit">Create</button>
 </form>

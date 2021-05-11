@@ -90,7 +90,7 @@ export class ProjectComponent implements OnInit {
   }
 
   onCreateCard() {
-    this.windowService.open(CreateCardComponent, { title: `Add new Card`, context: { id: this.id, user: {} } }).onClose.subscribe(res => {
+    this.windowService.open(CreateCardComponent, { title: `Add new Group`, context: { id: this.id, user: {} } }).onClose.subscribe(res => {
       this.loadData();
     });
   }
@@ -138,9 +138,16 @@ export class ProjectComponent implements OnInit {
 @Component({
   selector: 'card-title',
   template: `
-    <input nbInput type="text" [value]="card.name" [formControl]="name">
+    <input 
+      nbInput
+      (click)="onEditCard()"
+      [readonly]="!editMode"
+      style="border: none; background: rgba(0, 0, 0, 0);"
+      type="text" 
+      [value]="card.name" 
+      [formControl]="name">
     <button 
-    *ngIf="current_user.role == vg.project_roles.OWNER"
+    *ngIf="current_user.role == vg.project_roles.OWNER && editMode"
     nbButton (click)="editCard()" outline size="small"  nbTooltip="Edit">
         <nb-icon icon="edit-2-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
     </button>
@@ -168,6 +175,10 @@ export class CardTitle implements OnInit {
     this.name.setValue(this.card?.name);
   }
 
+  onEditCard() {
+    this.editMode = true;
+  }
+
   editCard() {
     const data = {
       old: {
@@ -180,7 +191,9 @@ export class CardTitle implements OnInit {
       }
     }
     this.proService.updateCards(this.idProject, data)
-      .subscribe(res => { });
+      .subscribe(res => { 
+        this.editMode = false;
+      });
   }
 }
 
@@ -188,27 +201,85 @@ export class CardTitle implements OnInit {
 @Component({
   selector: 'single-task',
   template: `
-    <nb-card>
-      <nb-card-body style="word-wrap: break-word;">
-        <div *ngIf="!editMode">
-          <nb-user *ngFor="let user of task.users" size="tiny" [nbTooltip]="user.role+' '+user?.name" [showTitle]="false" shape="round" [name]="user?.name" onlyPicture></nb-user>
-        </div>
-          <textarea nbInput [readonly]="!editMode" fullWidth [formControl]="description">
+    <div [style]="(task.state == vg.state.CLOSED? 'background: rgb(77, 11, 11);':'background: #252547;') + 
+    'border: 1px solid black; box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.76); border-radius: 3px 3px; padding: 2px 5px 5px 5px; margin-top: 10px;'">
+      <div>
+
+        <textarea 
+          (click)="onEditTask()" 
+          nbInput 
+          [readonly]="!editMode" 
+          fullWidth 
+          [formControl]="description" 
+          style="border: none; background: rgba(0, 0, 0, 0);">
             {{ task.description }}
-          </textarea> <br>
-          <input *ngIf="task.endDate" nbInput size="tiny" fullWidth [nbDatepicker]="datepicker" [value]="task.endDate" [formControl]="endDate" [readonly]="!editMode">
-          <nb-datepicker #datepicker></nb-datepicker><br>
-          <nb-select *ngIf="editMode" multiple placeholder="Users assigned to this task" [formControl]="users">
+        </textarea> <br>
+
+        <input 
+          *ngIf="editMode && task.endDate" 
+          (click)="onEditTask()" 
+          style="border: none; background: rgba(0, 0, 0, 0); font-size: 10px; height: 30px;" 
+          nbInput size="tiny" 
+          fullWidth 
+          [nbDatepicker]="datepicker" 
+          [value]="task.endDate" 
+          [formControl]="endDate" 
+          [readonly]="!editMode">
+        <nb-datepicker #datepicker></nb-datepicker><br>
+
+        <nb-select 
+          *ngIf="editMode" 
+          style="border: none; background: rgba(0, 0, 0, 0); font-size: 13px; height: 30px;" 
+          multiple 
+          placeholder="Users assigned to this task" 
+          [formControl]="users">
             <nb-option *ngFor="let el of task?.users" [value]="el.email">{{el.name}}</nb-option>
-          </nb-select>
+        </nb-select>
+
+        <span *ngIf="task.state == vg.state.CLOSED && !editMode">{{ task.state }}</span>
+
         <button 
-          *ngIf="current_user.role == vg.project_roles.OWNER"
+          *ngIf="current_user.role == vg.project_roles.OWNER && task.state != vg.state.CLOSED && editMode"
           (click)="editTask()"
-          nbButton outline size="tiny"  [nbTooltip]="editMode? 'Confirm?':'Edit'">
+          nbButton 
+          outline 
+          size="tiny"  
+          [nbTooltip]="editMode? 'Confirm?':'Edit'">
               <nb-icon [icon]="editMode? 'checkmark-outline':'edit-2-outline'" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
         </button>
-      </nb-card-body>
-    </nb-card>
+
+        <button
+          *ngIf="(current_user.role == vg.project_roles.OWNER || current_user.role == vg.project_roles.DEV) && !editMode"
+          (click)="changeState()"
+          nbButton 
+          outline 
+          size="tiny"  
+          [nbTooltip]="task.state == vg.state.CLOSED? 'Set as non finished':'Set as finished'">
+              <nb-icon [icon]="task.state == vg.state.CLOSED? 'lock-outline':'unlock-outline'" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+        </button>
+
+        <div 
+          *ngIf="!editMode"
+          style="width: 100%;
+                   height: 30px;
+                   overflow-x: auto;
+                   overflow-y: hidden;
+                   white-space: nowrap;
+                   margin-top: 5px;">
+          <nb-user 
+            *ngFor="let user of task.users" 
+            style="width: 11%;
+                  display: inline-block;"
+            size="tiny" 
+            [nbTooltip]="user.role+' '+user?.name" 
+            [showTitle]="false" 
+            shape="round" 
+            [name]="user?.name" 
+            onlyPicture>
+          </nb-user>
+        </div>
+      </div>
+    </div>
   `,
 })
 export class SingleTask implements OnInit {
@@ -224,7 +295,8 @@ export class SingleTask implements OnInit {
     }[],
     endDate?: Date,
     comment?: string,
-    cards?: string
+    cards?: string,
+    state?: string
   }
   @Input() current_user: any;
   @Input() all_users: any[];
@@ -250,6 +322,25 @@ export class SingleTask implements OnInit {
     this.users.setValue(emails);
   }
 
+  changeState() {
+    const data = {
+      old: this.task,
+      new: this.task
+    }
+    if (this.task.state == this.vg.state.CLOSED) {
+      data.new.state = this.vg.state.OPENED;
+    } else {
+      data.new.state = this.vg.state.CLOSED;
+    }
+    this.proService.updateTasks(this.idProject, data)
+        .subscribe(res => {});
+  }
+
+  onEditTask() {
+    if (this.task.state == this.vg.state.OPENED) {
+      this.editMode = true;
+    }
+  }
   editTask() {
     if (this.editMode) {
       const users = [];
@@ -271,12 +362,15 @@ export class SingleTask implements OnInit {
           users,
           endDate: this.endDate.value,
           comment: this.task.comment,
-          cards: this.task.cards
+          cards: this.task.cards,
+          state: this.task.state
         }
       }
       this.proService.updateTasks(this.idProject, data)
-        .subscribe(res => { });
+        .subscribe(res => { 
+          this.editMode = false;
+        });
     }
-    this.editMode = !this.editMode;
+    // this.editMode = !this.editMode;
   }
 }

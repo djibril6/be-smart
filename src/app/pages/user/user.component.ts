@@ -131,7 +131,7 @@ export class UserComponent implements OnInit {
         this.loadData();
       })
     } else {
-      event.confirm.reject();
+      // event.confirm.reject();
     }
   }
 

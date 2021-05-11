@@ -40,7 +40,8 @@ export interface ProjectData {
         }[],
         endDate: Date,
         comment: string,
-        cards: string
+        cards: string,
+        state: string
     }[];
 }
 

@@ -2,22 +2,24 @@
     <input type="text"   
                     id="input-name"
                     autofocus 
+                    fullWidth
                     nbInput
                     placeholder="Name your project" 
-                    formControlName="name" />
+                    formControlName="name" /> <br>
 
-    <nb-select name="ho" placeholder="Type of project" formControlName="type" id="type">
+    <nb-select name="ho" fullWidth placeholder="Type of project" formControlName="type" id="type">
         <nb-option value="public">Public</nb-option>
         <nb-option value="private">Private</nb-option>
-    </nb-select>
+    </nb-select><br>
 
     <input type="color"   
+    fullWidth
                     id="input-color" 
                     placeholder="Choose Color" 
                     nbInput
-                    formControlName="color" />
+                    formControlName="color" /> <br>
 
 
 
-    <button nbButton [disabled]="form.invalid" type="submit">Create</button>
+    <button nbButton fullWidth [disabled]="form.invalid" type="submit">Create</button>
 </form>

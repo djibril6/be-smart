@@ -1,9 +1,9 @@
 <form (ngSubmit)="onCreate()" [formGroup]="form">
-    <textarea nbInput placeholder="Description" formControlName="description"></textarea>
-    
-    <nb-select multiple placeholder="Users assigned to this task" formControlName="users">
+    <textarea nbInput fullWidth placeholder="Description" formControlName="description"></textarea><br>
+
+    <nb-select multiple fullWidth placeholder="Users assigned to this task" formControlName="users">
         <nb-option *ngFor="let el of data?.users" [value]="el.email">{{el.firstname}} {{el.lastname}}</nb-option>
-    </nb-select>
+    </nb-select><br>
 
     <input  
         id="input-date"
@@ -12,9 +12,9 @@
         nbInput
         placeholder="End of task" 
         formControlName="endDate" />
-    <nb-datepicker #datepicker></nb-datepicker>
+    <nb-datepicker #datepicker></nb-datepicker><br>
 
 
 
-    <button nbButton [disabled]="form.invalid" type="submit">Create</button>
+    <button nbButton fullWidth [disabled]="form.invalid" type="submit">Create</button>
 </form>
