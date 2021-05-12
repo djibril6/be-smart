@@ -50,6 +50,8 @@ export class AddUserComponent implements OnInit {
     .subscribe(res => {
         this.showToast('top', 'info', res.body.message, 'User');
         this.windowRef.close();
+    }, error => {
+      this.showToast('top', 'danger', 'User already exist!', 'User');
     });
   }
 

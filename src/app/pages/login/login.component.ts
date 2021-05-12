@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   user: User;
   error = false;
+  errorMessage = "";
 
   constructor(
     private fb: FormBuilder, 
@@ -41,6 +42,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.error = true;
       }
+    }, error => {
+      this.errorMessage = error.error.message;
+      this.error = true;
     });
   }
 

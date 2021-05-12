@@ -14,6 +14,7 @@ export class MyAccountComponent implements OnInit {
 
     form: FormGroup;
     data: any;
+    goodPass = true;
 
   constructor(
       private userService: UserService, 
@@ -36,14 +37,31 @@ export class MyAccountComponent implements OnInit {
     this.toastService.show(message, titre, { position, status });
   }
 
+  checkPassword(pass) { 
+    const passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+    if(pass.match(passw)) { 
+      return true;
+    }
+    else { 
+      return false;
+    }
+  }
+
   updateUser() {
     const data: any = {};
+    if (this.form.value.pass) { 
+      data.pass = this.form.value.pass;
+      this.goodPass = this.checkPassword(this.form.value.pass)
+    }
+    if (!this.goodPass) {
+      return;
+    }
+    this.goodPass = true;
     data.firstname = this.form.value.firstname;
     data.lastname = this.form.value.lastname;
     data.email = this.form.value.email;
-    data.role = this.form.value.role;
-    if (this.form.value.pass) { data.pass = this.form.value.pass; }
-    this.userService.updateUser(this.vg.user._id, data)
+    // data.role = this.form.value.role;
+    this.userService.updateAccount(this.vg.user._id, data)
     .subscribe(res => {
       this.vg.user.firstname = this.form.value.firstname;
       this.vg.user.lastname = this.form.value.lastname;

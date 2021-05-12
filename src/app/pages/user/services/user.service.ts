@@ -50,6 +50,12 @@ export class UserService {
     return this.httpClient
         .patch<User>(url, data, {headers : this.reqHeader, observe: 'response'});
   }
+  updateAccount(id, data): Observable<EntityResponseType> {
+    this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);
+    const url = this.vg.MAIN_URL + this.link + 'update-account/' + id;
+    return this.httpClient
+        .patch<User>(url, data, {headers : this.reqHeader, observe: 'response'});
+  }
 
   deleteUser(id): Observable<EntityResponseType> {
     this.reqHeader = new HttpHeaders().set('Authorization', 'Bearer ' + this.vg.token);

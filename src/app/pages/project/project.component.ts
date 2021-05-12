@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppConfig } from 'src/app/config/app.config';
 import { ProjectData } from 'src/app/models/project.model';
 import { ProjectService } from './services/project.service';
@@ -8,6 +8,7 @@ import { CreateCardComponent } from './components/create-card/create-card.compon
 import { ManageTeamComponent } from './components/manage-team/manage-team.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project',
@@ -49,7 +50,9 @@ export class ProjectComponent implements OnInit {
     private proService: ProjectService,
     private windowService: NbWindowService,
     private toastService: NbToastrService,
-    public vg: AppConfig
+    public vg: AppConfig,
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -87,6 +90,13 @@ export class ProjectComponent implements OnInit {
           });
         }
       });
+  }
+
+  xssDemo(value) {
+    // Angular treats all values as untrusted by default.
+    // javascript:alert("XSS works! but not by defautl")
+    return this.sanitizer.bypassSecurityTrustUrl(value);
+    return value;
   }
 
   onCreateCard() {
@@ -132,6 +142,16 @@ export class ProjectComponent implements OnInit {
   }
   editTask(task) { }
 
+  delete() {
+    this.proService.deleteProject(this.project._id)
+    .subscribe(res => {
+      this.showToast('top', 'info', res.body.message, this.project.name);
+      if (res.body.success) {
+        this.router.navigate(['page/home']);
+      }
+    });
+  }
+
 }
 
 // Card Title Component
@@ -176,7 +196,9 @@ export class CardTitle implements OnInit {
   }
 
   onEditCard() {
-    this.editMode = true;
+    if (this.current_user.role == this.vg.project_roles.OWNER) {
+      this.editMode = true;
+    }
   }
 
   editCard() {
@@ -202,7 +224,7 @@ export class CardTitle implements OnInit {
   selector: 'single-task',
   template: `
     <div [style]="(task.state == vg.state.CLOSED? 'background: rgb(77, 11, 11);':'background: #252547;') + 
-    'border: 1px solid black; box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.76); border-radius: 3px 3px; padding: 2px 5px 5px 5px; margin-top: 10px;'">
+    'border: 1px solid black; box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.76); border-radius: 3px 3px; padding: 2px 5px 5px 5px; margin-top: 10px;'">
       <div>
 
         <textarea 
@@ -337,7 +359,7 @@ export class SingleTask implements OnInit {
   }
 
   onEditTask() {
-    if (this.task.state == this.vg.state.OPENED) {
+    if (this.task.state == this.vg.state.OPENED && this.current_user.role == this.vg.project_roles.OWNER) {
       this.editMode = true;
     }
   }

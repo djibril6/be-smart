@@ -24,6 +24,7 @@
         nbButton 
         size="small" 
         status="primary" 
+        *ngIf="vg.user.role == 'ADMIN'"
         (click)="showUsers()" 
         class="header-btn" 
         outline>
@@ -49,11 +50,11 @@
         nbTooltip="Logout"
         nbButton
         size="small" 
-        status="primary" 
+        status="danger" 
         (click)="logout()"
         class="header-btn" 
         outline>
-            <nb-icon icon="log-out-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+            <nb-icon icon="log-out-outline" [options]="{ animation: { type: 'shake' } }"></nb-icon>
       </button>
 
       <div style="position: absolute; right: 120px;">
@@ -67,8 +68,7 @@
       
     </nb-layout-column>
   
-    <nb-layout-footer fixed>
-    <!-- Insert footer here -->
-    </nb-layout-footer>
+    <!-- <nb-layout-footer fixed>
+    </nb-layout-footer> -->
   
 </nb-layout>

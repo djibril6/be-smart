@@ -12,14 +12,20 @@
         <nb-option value="private">Private</nb-option>
     </nb-select><br>
 
+    <input type="url"   
+                    id="input-link"
+                    autofocus 
+                    fullWidth
+                    nbInput
+                    placeholder="source like github" 
+                    formControlName="link" /> <br>
+
     <input type="color"   
     fullWidth
                     id="input-color" 
                     placeholder="Choose Color" 
                     nbInput
                     formControlName="color" /> <br>
-
-
 
     <button nbButton fullWidth [disabled]="form.invalid" type="submit">Create</button>
 </form>

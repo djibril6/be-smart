@@ -49,7 +49,7 @@
         nbButton 
         [nbTooltip]="(project.state == 'Opened'? 'Close' :'Open' )+ ' project'"
         size="small" 
-        status="danger" 
+        status="primary" 
         (click)="changeState()" 
         class="header-btn" 
         outline>
@@ -57,15 +57,31 @@
         </button>
 
         <button 
+        *ngIf="current_user.role == vg.project_roles.OWNER"
+        nbButton 
+        nbTooltip="Delete this project?"
+        size="small"
+        (click)="delete()"
+        status="danger"
+        class="header-btn" 
+        outline>
+            <nb-icon icon="trash-2-outline" [options]="{ animation: { type: 'shake' } }"></nb-icon>
+        </button>
+
+        <button 
         *ngIf="current_user.role == vg.project_roles.VIEWER"
         nbButton 
         nbTooltip="Want to participate? Send request to the OWNER"
         size="small" 
-        status="info"
+        status="primary"
         class="header-btn" 
         outline>
             <nb-icon icon="paper-plane-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
         </button>
+
+        <div *ngIf="project.link" style="position: absolute; right: 60px; bottom: 20px;">
+            <a [href]="xssDemo(project.link)">Source Link</a>
+        </div>
 
         <div style="position: absolute; right: 20px; bottom: 20px;">
             <nb-user size="tiny" [nbTooltip]="'Your role in this project: ' + current_user?.role" shape="round" [name]="current_user?.firstname + ' ' + current_user?.lastname" onlyPicture></nb-user>

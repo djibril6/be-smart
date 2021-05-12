@@ -25,6 +25,7 @@ export interface ProjectData {
     }[];
     state?: string;
     color?: string;
+    link?: string;
     cards?: {
         _id: string,
         name: string

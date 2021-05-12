@@ -34,6 +34,7 @@
                     nbInput
                     fullWidth
                     formControlName="pass" />
+    <p style="color: rgb(139, 139, 18);" *ngIf="!goodPass">*Password must be with 8 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter</p>
 
     <button nbButton [disabled]="form.invalid" type="submit">Update</button>
 </form>

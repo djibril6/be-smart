@@ -20,7 +20,7 @@ export class CreateProjectComponent implements OnInit {
     private toastService: NbToastrService,
     private route: Router,
     public vg: AppConfig,
-  private fb: FormBuilder
+  private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +28,7 @@ export class CreateProjectComponent implements OnInit {
       name: ['', Validators.required],
       type: ['', Validators.required],
       color: ['#5246E0', Validators.required],
+      link: ['', Validators.nullValidator],
     });
   }
 
@@ -44,7 +45,7 @@ export class CreateProjectComponent implements OnInit {
       lastname: this.vg.user.lastname,
       email: this.vg.user.email,
       role: this.vg.project_roles.OWNER,
-      state: true
+      state: true,
     }];
     this.proService.AddProject(data)
     .subscribe(res => {

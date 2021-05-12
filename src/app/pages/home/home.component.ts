@@ -12,17 +12,20 @@ import { NbToastrService, NbComponentStatus } from '@nebular/theme';
 })
 export class HomeComponent implements OnInit {
   projects: ProjectData[];
+  dangerousUrl: string;
+  trustedUrl: any;
 
   constructor(
     private proService: ProjectService,
     private router: Router,
     private toastService: NbToastrService,
-    public vg: AppConfig
+    public vg: AppConfig,
     ) { }
 
   ngOnInit(): void {
     this.loadProject();
   }
+  
 
   showToast(position, status: NbComponentStatus, message, titre) {
     this.toastService.show(message, titre, { position, status });
