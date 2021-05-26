@@ -2,7 +2,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 This project is made for learning some best practices in web security. So we did a penetration testing to find commoms flaws and vulnerability and then we fix them.
 this project is front end part of the global applicaition. The back-end made in Node js can be found here: https://github.com/djibril6/be-smart-back
-OWASP scan report can be found here: https://drive.google.com/file/d/179VxsCEKFQmoGMMJ-4dSoM5ZREvtd1qq/view?usp=sharing
+OWASP scan report can be found here: https://drive.google.com/file/d/1lTVPV_QXw7mZPyc-nv-OUNZPrhAtF-ee/view?usp=sharing
 
 ## Development server
 install all required packages with `npm install` then run the app with `ng serve`. 
